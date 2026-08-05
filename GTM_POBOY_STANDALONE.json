@@ -1,6 +1,6 @@
 {
   "exportFormatVersion": 2,
-  "exportTime": "2026-08-05 19:44:00",
+  "exportTime": "2026-08-05 19:49:00",
   "containerVersion": {
     "path": "accounts/1000/containers/2000/versions/1",
     "accountId": "1000",
@@ -46,112 +46,112 @@
         "containerId": "2000",
         "tagId": "20",
         "name": "[Po'Boy GA4] Base Configuration Tag (Auto-Pushes Data Layer)",
-        "type": "googletag",
+        "type": "gaawc",
         "parameter": [
           {
             "type": "TEMPLATE",
-            "key": "tagId",
+            "key": "measurementId",
             "value": "{{GA4 Measurement ID}}"
           },
           {
             "type": "LIST",
-            "key": "configSettings",
+            "key": "fieldsToSet",
             "list": [
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "user_id" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "user_id" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.user_id}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_friendly_handle" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_friendly_handle" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.friendly_handle}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_channel_group" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_channel_group" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.channel_group}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_first_touch_source" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_first_touch_source" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.first_touch_source}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_first_touch_campaign" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_first_touch_campaign" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.first_touch_campaign}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_gclid" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_gclid" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.gclid}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_fbclid" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_fbclid" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.fbclid}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_city" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_city" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.location.city}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_country" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_country" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.location.country}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_timezone" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_timezone" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.location.timezone}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_device_category" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_device_category" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.device.category}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_os" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_os" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.device.os_name}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_browser" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_browser" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.device.browser_name}}" }
                 ]
               },
               {
                 "type": "MAP",
                 "map": [
-                  { "type": "TEMPLATE", "key": "parameter", "value": "poboy_execution_ms" },
+                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_execution_ms" },
                   { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.performance.execution_time_ms}}" }
                 ]
               }
