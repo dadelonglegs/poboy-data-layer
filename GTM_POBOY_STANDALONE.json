@@ -1,0 +1,207 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-08-05 18:46:00",
+  "containerVersion": {
+    "path": "accounts/1000/containers/2000/versions/1",
+    "accountId": "1000",
+    "containerId": "2000",
+    "containerVersionId": "1",
+    "name": "PoBoy Standalone GPS Permission Prompt Data Layer",
+    "container": {
+      "path": "accounts/1000/containers/2000",
+      "accountId": "1000",
+      "containerId": "2000",
+      "name": "PoBoy Standalone GPS Permission Prompt",
+      "publicId": "GTM-POBOY02",
+      "usageContext": [
+        "WEB"
+      ]
+    },
+    "tag": [
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "tagId": "10",
+        "name": "[Po'Boy] Standalone Data Layer Publisher (Native GPS Permission Prompt & ES5)",
+        "type": "html",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "html",
+            "value": "<script>\n(function(w,d){\n  'use strict';\n  var t0=performance.now();\n  var AD=['Toasted','Smoked','Spicy','Honey','Garlic','Chipotle','Truffle','Cajun','Crispy','Glazed','Melted','Roasted','Pickled','Seared','Braised','Bourbon','Tangy','Savory','Zesty','Double','Triple','Loaded','Pressed','Herb'];\n  var ING=['Provolone','Pastrami','Brioche','Capicola','Salami','Gouda','RoastBeef','Havarti','Muenster','Mortadella','Ciabatta','Sourdough','Prosciutto','Swiss','Cheddar','Bacon','Turkey','Meatball','Baguette','Chorizo','Pepperoni','Fontina','Brie','Camembert'];\n  function fn(s){\n    var str=typeof s==='string'?s:JSON.stringify(s||Math.random());\n    var h=0;for(var i=0;i<str.length;i++){h=(h<<5)-h+str.charCodeAt(i);h|=0;}\n    var p=Math.abs(h);\n    return AD[p%AD.length]+ING[Math.floor(p/AD.length)%ING.length]+'-'+(1000+(p%9000));\n  }\n  function uuid(){return 'pb_'+'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&0x3|0x8);return v.toString(16);});}\n  function setC(n,v,days){\n    var e='';if(days){var dt=new Date();dt.setTime(dt.getTime()+(days*86400000));e='; expires='+dt.toUTCString();}\n    var h=w.location.hostname,p=h.split('.'),dom=p.length>2?'; domain=.'+p.slice(-2).join('.'):'';\n    d.cookie=n+'='+encodeURIComponent(v)+e+'; path=/'+dom+'; SameSite=Lax';\n  }\n  function getC(n){var eq=n+'=',ca=d.cookie.split(';');for(var i=0;i<ca.length;i++){var c=ca[i].trim();if(c.indexOf(eq)===0)return decodeURIComponent(c.substring(eq.length));}return null;}\n  var uId=getC('_poboy_user_id')||localStorage.getItem('_poboy_user_id')||uuid();\n  var handle=getC('_poboy_friendly_name')||localStorage.getItem('_poboy_friendly_name')||fn(uId);\n  setC('_poboy_user_id',uId,730);localStorage.setItem('_poboy_user_id',uId);\n  setC('_poboy_friendly_name',handle,730);localStorage.setItem('_poboy_friendly_name',handle);\n  var vault={};\n  var storedV=localStorage.getItem('_poboy_param_vault')||getC('_poboy_param_vault');\n  if(storedV){try{vault=JSON.parse(storedV);}catch(e){vault={};}}\n  var qStr=w.location.search?w.location.search.substring(1):'';\n  var updated=false;\n  if(qStr){\n    var pairs=qStr.split('&');\n    for(var j=0;j<pairs.length;j++){\n      if(pairs[j]){\n        var kv=pairs[j].split('=');\n        var k='',v='';\n        try{k=decodeURIComponent(kv[0]);v=decodeURIComponent(kv[1]||'');}catch(e){k=kv[0];v=kv[1]||'';}\n        if(k&&v!==''&&vault[k]!==v){\n          vault[k]=v;\n          updated=true;\n        }\n      }\n    }\n  }\n  if(updated||!storedV){\n    var vStr=JSON.stringify(vault);\n    localStorage.setItem('_poboy_param_vault',vStr);\n    setC('_poboy_param_vault',vStr,730);\n  }\n  var cachedGpsStr=localStorage.getItem('_poboy_gps_cache');\n  var parsedGps=null;\n  if(cachedGpsStr){try{parsedGps=JSON.parse(cachedGpsStr);}catch(e){}}\n  var tz=Intl.DateTimeFormat().resolvedOptions().timeZone||'Unknown';\n  var tzOffset=-(new Date().getTimezoneOffset()/60);\n  var lang=navigator.language||navigator.userLanguage||null;\n  var loc={\n    city:null,region:null,country:null,country_code:null,\n    latitude:parsedGps?parsedGps.latitude:null,\n    longitude:parsedGps?parsedGps.longitude:null,\n    accuracy_meters:parsedGps?parsedGps.accuracy_meters:null,\n    postal_code:null,timezone:tz,timezone_offset_hours:tzOffset,language:lang,\n    location_source:parsedGps?'gps_cached':'timezone_inferred',\n    permission_status:parsedGps?'granted':'prompt'\n  };\n  var getParam=function(k){return vault[k]||null;};\n  var utms={utm_source:getParam('utm_source'),utm_medium:getParam('utm_medium'),utm_campaign:getParam('utm_campaign'),utm_term:getParam('utm_term'),utm_content:getParam('utm_content'),utm_id:getParam('utm_id')};\n  var cids={gclid:getParam('gclid'),wbraid:getParam('wbraid'),gbraid:getParam('gbraid'),fbclid:getParam('fbclid'),msclkid:getParam('msclkid'),ttclid:getParam('ttclid'),li_fat_id:getParam('li_fat_id'),twclid:getParam('twclid'),irclickid:getParam('irclickid'),affiliate_id:getParam('affiliate_id')||getParam('ref')||null};\n  var ch='Direct';if(cids.gclid||cids.wbraid||cids.gbraid)ch='Paid Search (Google)';else if(cids.fbclid)ch='Paid Social (Meta)';else if(cids.msclkid)ch='Paid Search (Bing)';else if(cids.ttclid)ch='Paid Social (TikTok)';else if(utms.utm_medium)ch='Campaign ('+utms.utm_medium+')';else if(d.referrer&&d.referrer.indexOf('google.')!==-1)ch='Organic Search';\n  var ua=navigator.userAgent,os='Desktop OS',br='Browser';\n  if(/Windows/i.test(ua))os='Windows';else if(/Mac OS/i.test(ua))os='macOS';else if(/Android/i.test(ua))os='Android';else if(/iPhone|iPad/i.test(ua))os='iOS';\n  if(/Chrome/i.test(ua))br='Google Chrome';else if(/Safari/i.test(ua))br='Apple Safari';else if(/Firefox/i.test(ua))br='Mozilla Firefox';else if(/Edg/i.test(ua))br='Microsoft Edge';\n  var conn=navigator.connection||{};\n  var getM=function(n){var el=d.querySelector('meta[name=\"'+n+'\"], meta[property=\"'+n+'\"]');return el?el.getAttribute('content')||null:null;};\n  var getL=function(r){var el=d.querySelector('link[rel=\"'+r+'\"]');return el?el.getAttribute('href')||null:null;};\n  var schemas=[];var sTags=d.querySelectorAll('script[type=\"application/ld+json\"]');for(var k=0;k<sTags.length;k++){try{schemas.push(JSON.parse(sTags[k].innerText||sTags[k].textContent));}catch(e){}}\n  var h1Elements=d.querySelectorAll('h1');var h1s=[];for(var m=0;m<h1Elements.length;m++){h1s.push(h1Elements[m].innerText.trim());}\n  var h2Elements=d.querySelectorAll('h2');var h2s=[];for(var n=0;n<h2Elements.length;n++){h2s.push(h2Elements[n].innerText.trim());}\n  var schemaTypes=[];for(var p=0;p<schemas.length;p++){schemaTypes.push(schemas[p]['@type']||'Thing');}\n  var tStr=localStorage.getItem('_poboy_touches'),tData={first_touch:null,visit_count:0};\n  if(tStr){try{tData=JSON.parse(tStr);}catch(e){}}\n  var curTouch={timestamp:new Date().toISOString(),page:w.location.href,channel_group:ch,utms:utms,click_ids:cids,vault_params:vault};\n  if(!tData.first_touch)tData.first_touch=curTouch;\n  tData.last_touch=curTouch;tData.visit_count=(tData.visit_count||0)+1;\n  localStorage.setItem('_poboy_touches',JSON.stringify(tData));\n  var execTime=(performance.now()-t0).toFixed(3);\n  var ftSource=(tData.first_touch&&tData.first_touch.utms&&tData.first_touch.utms.utm_source)?tData.first_touch.utms.utm_source:'direct';\n  var ftCampaign=(tData.first_touch&&tData.first_touch.utms&&tData.first_touch.utms.utm_campaign)?tData.first_touch.utms.utm_campaign:'direct';\n  var payload={\n    identity:{\n      user_id:uId,\n      friendly_handle:handle,\n      friendly_username:handle\n    },\n    session:{\n      session_id:'sess_'+Math.random().toString(36).substring(7),\n      session_number:1,\n      session_page_views:1,\n      visit_count:tData.visit_count,\n      is_first_visit:tData.visit_count===1,\n      is_returning_user:tData.visit_count>1\n    },\n    attribution:{\n      channel_group:ch,\n      first_touch_source:ftSource,\n      first_touch_campaign:ftCampaign,\n      utms:utms,\n      click_ids:cids\n    },\n    parameters:{\n      vault:vault,\n      current_url_query:w.location.search||null\n    },\n    location:loc,\n    meta:{\n      page_title:d.title,\n      page_location:w.location.href,\n      page_path:w.location.pathname,\n      description:getM('description')||getM('og:description'),\n      keywords:getM('keywords'),\n      author:getM('author'),\n      robots:getM('robots'),\n      viewport:getM('viewport'),\n      canonical_url:getL('canonical'),\n      favicon_url:getL('icon')||getL('shortcut icon'),\n      charset:d.characterSet||d.inputEncoding||null,\n      heading_h1:h1s[0]||null,\n      all_h1_texts:h1s.length>0?h1s:null,\n      heading_h2_first:h2s[0]||null\n    },\n    social:{\n      og_title:getM('og:title'),\n      og_type:getM('og:type'),\n      og_image:getM('og:image'),\n      og_url:getM('og:url'),\n      og_site_name:getM('og:site_name'),\n      twitter_card:getM('twitter:card'),\n      twitter_title:getM('twitter:title'),\n      twitter_image:getM('twitter:image')\n    },\n    schema:{\n      json_ld:schemas.length>0?schemas:null,\n      types_list:schemaTypes.join(', ')||null\n    },\n    dom_metrics:{\n      total_h1_count:h1s.length,\n      total_h2_count:h2s.length,\n      total_links_count:d.links.length,\n      total_images_count:d.images.length,\n      total_forms_count:d.forms.length,\n      total_scripts_count:d.scripts.length,\n      dom_nodes_count:d.getElementsByTagName('*').length\n    },\n    device:{\n      category:/Mobi|Android|iPhone/i.test(ua)?'Mobile':'Desktop',\n      os_name:os,\n      browser_name:br,\n      screen_resolution:screen.width+'x'+screen.height,\n      viewport_size:w.innerWidth+'x'+w.innerHeight,\n      hardware_concurrency:navigator.hardwareConcurrency||null,\n      device_memory_gb:navigator.deviceMemory||null,\n      connection_type:conn.effectiveType||conn.type||'unknown'\n    },\n    performance:{\n      execution_time_ms:parseFloat(execTime)\n    },\n    user_id:uId,\n    friendly_handle:handle,\n    channel_group:ch,\n    gclid:cids.gclid||null,\n    fbclid:cids.fbclid||null,\n    page_title:d.title,\n    page_location:w.location.href,\n    referrer:d.referrer||'direct'\n  };\n  w.dataLayer=w.dataLayer||[];\n  w.dataLayer.push({event:'poboy_loaded',poboy:payload});\n\n  // NATIVE BROWSER GPS PERMISSION PROMPT TRIGGER\n  if(navigator.geolocation){\n    navigator.geolocation.getCurrentPosition(\n      function(pos){\n        var gpsLoc={\n          city:null,region:null,country:null,country_code:null,\n          latitude:pos.coords.latitude,\n          longitude:pos.coords.longitude,\n          accuracy_meters:pos.coords.accuracy,\n          postal_code:null,timezone:tz,timezone_offset_hours:tzOffset,language:lang,\n          location_source:'gps_permission_granted',\n          permission_status:'granted'\n        };\n        payload.location=gpsLoc;\n        localStorage.setItem('_poboy_gps_cache',JSON.stringify(gpsLoc));\n        w.dataLayer.push({event:'poboy_gps_updated',poboy:payload});\n      },\n      function(err){\n        payload.location.permission_status='denied_or_dismissed';\n      },\n      {enableHighAccuracy:true,timeout:10000,maximumAge:300000}\n    );\n  }\n})(window,document);\n</script>"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "supportDocumentWrite",
+            "value": "false"
+          }
+        ],
+        "firingTriggerId": [
+          "2147479553"
+        ],
+        "tagFiringOption": "ONCE_PER_EVENT"
+      }
+    ],
+    "trigger": [
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "triggerId": "100",
+        "name": "[Po'Boy] Event - poboy_loaded",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              {
+                "type": "TEMPLATE",
+                "key": "arg0",
+                "value": "{{_event}}"
+              },
+              {
+                "type": "TEMPLATE",
+                "key": "arg1",
+                "value": "poboy_loaded"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "301",
+        "name": "dlv - poboy.user_id",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "poboy.user_id"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVersion",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "302",
+        "name": "dlv - poboy.friendly_handle",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "poboy.friendly_handle"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVersion",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "303",
+        "name": "dlv - poboy.channel_group",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "poboy.channel_group"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVersion",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "304",
+        "name": "dlv - poboy.first_touch_source",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "poboy.first_touch_source"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVersion",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "305",
+        "name": "dlv - poboy.first_touch_campaign",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "poboy.first_touch_campaign"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVersion",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "306",
+        "name": "dlv - poboy.gclid",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "poboy.gclid"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVersion",
+            "value": "2"
+          }
+        ]
+      },
+      {
+        "accountId": "1000",
+        "containerId": "2000",
+        "variableId": "307",
+        "name": "dlv - poboy.fbclid",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "poboy.fbclid"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "dataLayerVersion",
+            "value": "2"
+          }
+        ]
+      }
+    ]
+  }
+}
