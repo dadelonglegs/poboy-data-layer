@@ -1,6 +1,6 @@
 {
   "exportFormatVersion": 2,
-  "exportTime": "2026-08-05 19:49:00",
+  "exportTime": "2026-08-05 19:58:00",
   "containerVersion": {
     "path": "accounts/1000/containers/2000/versions/1",
     "accountId": "1000",
@@ -46,116 +46,17 @@
         "containerId": "2000",
         "tagId": "20",
         "name": "[Po'Boy GA4] Base Configuration Tag (Auto-Pushes Data Layer)",
-        "type": "gaawc",
+        "type": "html",
         "parameter": [
           {
             "type": "TEMPLATE",
-            "key": "measurementId",
-            "value": "{{GA4 Measurement ID}}"
+            "key": "html",
+            "value": "<script>\n(function(){\n  var gaId = '{{GA4 Measurement ID}}';\n  if(!gaId || gaId === 'G-XXXXXXXXXX') return;\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){window.dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', gaId, {\n    'user_id': '{{dlv - poboy.user_id}}',\n    'poboy_friendly_handle': '{{dlv - poboy.friendly_handle}}',\n    'poboy_channel_group': '{{dlv - poboy.channel_group}}',\n    'poboy_first_touch_source': '{{dlv - poboy.first_touch_source}}',\n    'poboy_first_touch_campaign': '{{dlv - poboy.first_touch_campaign}}',\n    'poboy_gclid': '{{dlv - poboy.gclid}}',\n    'poboy_fbclid': '{{dlv - poboy.fbclid}}',\n    'poboy_city': '{{dlv - poboy.location.city}}',\n    'poboy_country': '{{dlv - poboy.location.country}}',\n    'poboy_timezone': '{{dlv - poboy.location.timezone}}',\n    'poboy_device_category': '{{dlv - poboy.device.category}}',\n    'poboy_os': '{{dlv - poboy.device.os_name}}',\n    'poboy_browser': '{{dlv - poboy.device.browser_name}}',\n    'poboy_execution_ms': '{{dlv - poboy.performance.execution_time_ms}}'\n  });\n})();\n</script>"
           },
           {
-            "type": "LIST",
-            "key": "fieldsToSet",
-            "list": [
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "user_id" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.user_id}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_friendly_handle" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.friendly_handle}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_channel_group" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.channel_group}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_first_touch_source" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.first_touch_source}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_first_touch_campaign" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.first_touch_campaign}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_gclid" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.gclid}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_fbclid" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.fbclid}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_city" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.location.city}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_country" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.location.country}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_timezone" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.location.timezone}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_device_category" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.device.category}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_os" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.device.os_name}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_browser" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.device.browser_name}}" }
-                ]
-              },
-              {
-                "type": "MAP",
-                "map": [
-                  { "type": "TEMPLATE", "key": "fieldName", "value": "poboy_execution_ms" },
-                  { "type": "TEMPLATE", "key": "value", "value": "{{dlv - poboy.performance.execution_time_ms}}" }
-                ]
-              }
-            ]
+            "type": "BOOLEAN",
+            "key": "supportDocumentWrite",
+            "value": "false"
           }
         ],
         "firingTriggerId": [
