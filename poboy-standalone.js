@@ -109,7 +109,7 @@
     }
 
     function resolveSession() {
-        let sessStr = Storage.getSession(CONFIG.sessionName) || Storage.getCookie(CONFIG.sessionName);
+        let sessStr = Storage.getLocal(CONFIG.sessionName) || Storage.getSession(CONFIG.sessionName) || Storage.getCookie(CONFIG.sessionName);
         let now = Date.now();
         let timeoutMs = CONFIG.sessionTimeoutMinutes * 60000;
         let session = null;
@@ -137,6 +137,7 @@
         }
 
         const sessJson = JSON.stringify(session);
+        Storage.setLocal(CONFIG.sessionName, sessJson);
         Storage.setSession(CONFIG.sessionName, sessJson);
         Storage.setCookie(CONFIG.sessionName, sessJson, 1);
         return session;
@@ -330,55 +331,93 @@
 
         const executionTimeMs = (performance.now() - startTime).toFixed(3);
 
+        const osName = (function() {
+            const ua = navigator.userAgent;
+            if (ua.includes('Win')) return 'Windows';
+            if (ua.includes('Mac')) return 'macOS';
+            if (ua.includes('Linux')) return 'Linux';
+            if (ua.includes('Android')) return 'Android';
+            if (ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+            return 'Unknown OS';
+        })();
+
+        const browserName = (function() {
+            const ua = navigator.userAgent;
+            if (ua.includes('Firefox')) return 'Mozilla Firefox';
+            if (ua.includes('SamsungBrowser')) return 'Samsung Internet';
+            if (ua.includes('Opera') || ua.includes('OPR')) return 'Opera';
+            if (ua.includes('Trident')) return 'Internet Explorer';
+            if (ua.includes('Edge') || ua.includes('Edg')) return 'Microsoft Edge';
+            if (ua.includes('Chrome')) return 'Google Chrome';
+            if (ua.includes('Safari')) return 'Apple Safari';
+            return 'Unknown Browser';
+        })();
+
         const organisedPayload = {
-            identity: {
+            user_scope: {
                 user_id: identity.user_id,
                 friendly_handle: identity.friendly_username,
-                friendly_username: identity.friendly_username
+                friendly_username: identity.friendly_username,
+                visit_count: touchData.visit_count,
+                is_first_visit: touchData.visit_count === 1,
+                is_returning_user: touchData.visit_count > 1,
+                first_touch: touchData.first_touch,
+                last_touch: touchData.last_touch,
+                param_vault: vault
             },
-            session: {
+            session_scope: {
                 session_id: session.session_id,
                 session_number: session.session_number,
                 session_page_views: session.page_views_in_session || 1,
-                visit_count: touchData.visit_count,
-                is_first_visit: touchData.visit_count === 1,
-                is_returning_user: touchData.visit_count > 1
-            },
-            attribution: {
+                session_start_time: session.start_time,
                 channel_group: channelGroup,
-                first_touch_source: touchData.first_touch?.utms?.utm_source || 'direct',
-                first_touch_campaign: touchData.first_touch?.utms?.utm_campaign || 'direct',
+                device: {
+                    category: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
+                    os_name: osName,
+                    browser_name: browserName,
+                    screen_resolution: `${window.screen.width}x${window.screen.height}`,
+                    viewport_size: `${window.innerWidth}x${window.innerHeight}`,
+                    hardware_concurrency: navigator.hardwareConcurrency || null,
+                    device_memory_gb: navigator.deviceMemory || null,
+                    connection_type: conn.effectiveType || conn.type || 'unknown'
+                },
+                location: locationData
+            },
+            event_scope: {
+                event_name: 'page_view',
+                event_timestamp: now,
+                page_title: document.title,
+                page_location: window.location.href,
+                page_path: window.location.pathname,
+                referrer: document.referrer || 'direct',
                 utms: utms,
-                click_ids: clickIds
+                click_ids: clickIds,
+                meta: contentMeta.meta,
+                social: contentMeta.social,
+                schema: contentMeta.schema,
+                dom_metrics: contentMeta.dom_metrics,
+                performance: { execution_time_ms: parseFloat(executionTimeMs) }
             },
-            parameters: {
-                vault: vault,
-                current_url_query: window.location.search || null
-            },
+            identity: { user_id: identity.user_id, friendly_handle: identity.friendly_username, friendly_username: identity.friendly_username },
+            session: { session_id: session.session_id, session_number: session.session_number, session_page_views: session.page_views_in_session || 1, visit_count: touchData.visit_count, is_first_visit: touchData.visit_count === 1, is_returning_user: touchData.visit_count > 1 },
+            attribution: { channel_group: channelGroup, first_touch_source: touchData.first_touch?.utms?.utm_source || 'direct', first_touch_campaign: touchData.first_touch?.utms?.utm_campaign || 'direct', utms: utms, click_ids: clickIds },
+            parameters: { vault: vault, current_url_query: window.location.search || null },
             location: locationData,
             meta: contentMeta.meta,
             social: contentMeta.social,
             schema: contentMeta.schema,
             dom_metrics: contentMeta.dom_metrics,
-            device: {
-                category: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
-                screen_resolution: `${window.screen.width}x${window.screen.height}`,
-                viewport_size: `${window.innerWidth}x${window.innerHeight}`,
-                hardware_concurrency: navigator.hardwareConcurrency || null,
-                device_memory_gb: navigator.deviceMemory || null,
-                connection_type: conn.effectiveType || conn.type || 'unknown'
-            },
-            performance: {
-                execution_time_ms: parseFloat(executionTimeMs)
-            },
+            device: { category: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop', os_name: osName, browser_name: browserName, screen_resolution: `${window.screen.width}x${window.screen.height}`, viewport_size: `${window.innerWidth}x${window.innerHeight}`, hardware_concurrency: navigator.hardwareConcurrency || null, device_memory_gb: navigator.deviceMemory || null, connection_type: conn.effectiveType || conn.type || 'unknown' },
+            performance: { execution_time_ms: parseFloat(executionTimeMs) },
             user_id: identity.user_id,
             friendly_handle: identity.friendly_username,
+            friendly_username: identity.friendly_username,
+            session_id: session.session_id,
             channel_group: channelGroup,
             gclid: clickIds.gclid,
             fbclid: clickIds.fbclid,
             page_title: document.title,
-            page_location: window.location.href,
-            referrer: document.referrer || 'direct'
+            page_location: window.location.href
         };
 
         window.dataLayer = window.dataLayer || [];
@@ -424,6 +463,7 @@
                         permission_status: 'granted'
                     };
 
+                    Object.assign(organisedPayload.session_scope.location, gpsLocation);
                     Object.assign(organisedPayload.location, gpsLocation);
                     Storage.setLocal('_poboy_gps_cache', JSON.stringify(gpsLocation));
 
