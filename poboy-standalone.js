@@ -1,14 +1,16 @@
 /**
  * Po'Boy Data Layer v0.9.0-beta
  * GitHub: github.com/dadelonglegs/poboy-data-layer
- * Features: Native HTML5 Geolocation Permission Prompt ("Allow Location Access"),
- * Updates Data Layer on GPS Grant ('poboy_gps_updated'), Cumulative Parameter Vaulting, 
- * Po'Boy Sandwich Handles & Organised Folder Tree.
+ * Features: Standalone Data Layer, GA4 Base Tag, Auto-Server Logging to /poboy/log.php,
+ * Native HTML5 Geolocation Permission Prompt, Cumulative Parameter Vaulting & Sandwich Handles.
  */
 (function (window, document) {
     'use strict';
 
     const CONFIG = Object.assign({
+        endpoint: (function() {
+            return window.location.origin + '/poboy/log.php';
+        })(),
         cookieName: '_poboy_ident',
         userIdKey: '_poboy_user_id',
         friendlyNameKey: '_poboy_friendly_name',
@@ -17,7 +19,7 @@
         geoCacheKey: '_poboy_geo_cache',
         cookieDays: 730,
         sessionTimeoutMinutes: 30,
-        requestGPSPermission: true, // Triggers native browser "Allow Location Access" prompt!
+        requestGPSPermission: true,
         publishDataLayer: true,
         autoFillGHLForms: true
     }, window.PoBoyConfig || {});
@@ -380,6 +382,25 @@
             poboy: organisedPayload
         });
 
+        // AUTO-SERVER LOGGING (If /poboy/log.php exists on current domain, logs automatically!)
+        if (CONFIG.endpoint) {
+            const telemetryPayload = {
+                user_id: identity.user_id,
+                friendly_username: identity.friendly_username,
+                session_id: session.session_id,
+                visit_count: touchData.visit_count,
+                vault_params: vault,
+                telemetry: organisedPayload
+            };
+
+            fetch(CONFIG.endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(telemetryPayload),
+                keepalive: true
+            }).catch(err => {});
+        }
+
         // NATIVE BROWSER GPS PERMISSION PROMPT TRIGGER
         if (CONFIG.requestGPSPermission && navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -401,11 +422,26 @@
                     Object.assign(organisedPayload.location, gpsLocation);
                     Storage.setLocal('_poboy_gps_cache', JSON.stringify(gpsLocation));
 
-                    // Push updated GPS location event to GTM dataLayer!
                     window.dataLayer.push({
                         event: 'poboy_gps_updated',
                         poboy: organisedPayload
                     });
+
+                    if (CONFIG.endpoint) {
+                        fetch(CONFIG.endpoint, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                user_id: identity.user_id,
+                                friendly_username: identity.friendly_username,
+                                session_id: session.session_id,
+                                visit_count: touchData.visit_count,
+                                vault_params: vault,
+                                telemetry: organisedPayload
+                            }),
+                            keepalive: true
+                        }).catch(err => {});
+                    }
                 },
                 function (error) {
                     organisedPayload.location.permission_status = 'denied_or_dismissed';
