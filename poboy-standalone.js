@@ -109,7 +109,7 @@
     }
 
     function resolveSession() {
-        let sessStr = Storage.getSession(CONFIG.sessionName);
+        let sessStr = Storage.getSession(CONFIG.sessionName) || Storage.getCookie(CONFIG.sessionName);
         let now = Date.now();
         let timeoutMs = CONFIG.sessionTimeoutMinutes * 60000;
         let session = null;
@@ -136,7 +136,9 @@
             session.page_views_in_session = (session.page_views_in_session || 1) + 1;
         }
 
-        Storage.setSession(CONFIG.sessionName, JSON.stringify(session));
+        const sessJson = JSON.stringify(session);
+        Storage.setSession(CONFIG.sessionName, sessJson);
+        Storage.setCookie(CONFIG.sessionName, sessJson, 1);
         return session;
     }
 
@@ -292,6 +294,9 @@
     }
 
     function initTracker() {
+        if (window.__POBOY_TRACKED__) return;
+        window.__POBOY_TRACKED__ = true;
+
         const startTime = performance.now();
         const identity = resolveIdentity();
         const session = resolveSession();
